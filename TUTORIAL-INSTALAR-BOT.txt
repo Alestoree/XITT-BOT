@@ -1,0 +1,250 @@
+================================================================
+  TUTORIAL COMPLETO - INSTALAR SLIMBOT EN TU TELEFONO ANDROID
+  Lee TODO antes de empezar. Sigue los pasos EN ORDEN.
+================================================================
+
+ANTES DE EMPEZAR necesitas:
+- Telefono Android (cualquier version)
+- Conexion a internet (WiFi recomendado)
+- 500MB de espacio libre
+- Tiempo estimado: 15-20 minutos
+
+================================================================
+PASO 1 - DESCARGAR TERMUX
+================================================================
+
+Termux es la app que permite correr el bot en tu telefono.
+
+IMPORTANTE: NO descargues Termux de Play Store.
+Descargalo de F-Droid porque la version de Play Store esta desactualizada.
+
+1. Abre tu navegador (Chrome, Firefox, etc)
+2. Ve a: https://f-droid.org/packages/com.termux/
+3. Toca el boton "Download APK"
+4. Cuando termine la descarga, abre el archivo APK
+5. Si te pide "Permitir instalar apps de fuentes desconocidas", acepta
+6. Instala la app normalmente
+7. Abre Termux cuando termine la instalacion
+
+================================================================
+PASO 2 - CONFIGURAR TERMUX (primera vez)
+================================================================
+
+Cuando abras Termux veras una pantalla negra con texto.
+Eso es normal. Es como una terminal de computadora.
+
+Escribe este comando y presiona ENTER:
+(Copia y pega cada linea, presiona ENTER despues de cada una)
+
+termux-setup-storage
+
+- Cuando te pregunte si permitir acceso al almacenamiento, toca PERMITIR
+- Espera que termine (puede tardar 1-2 minutos)
+
+Luego actualiza los paquetes:
+
+pkg update -y
+
+- Esto puede tardar 2-5 minutos. Espera que termine completamente.
+- Si te pregunta algo durante la actualizacion, escribe "y" y presiona ENTER
+
+================================================================
+PASO 3 - INSTALAR NODE.JS
+================================================================
+
+Node.js es el programa que corre el bot.
+
+Escribe este comando:
+
+pkg install nodejs -y
+
+- Esto puede tardar 3-5 minutos dependiendo de tu internet
+- Espera que termine completamente antes de continuar
+
+Verifica que se instalo correctamente:
+
+node --version
+
+- Deberia aparecer algo como: v20.x.x o v18.x.x
+- Si aparece el numero, todo esta bien
+
+================================================================
+PASO 4 - CREAR LA CARPETA DEL BOT
+================================================================
+
+Vamos a crear una carpeta para guardar los archivos del bot.
+
+mkdir slimbot
+cd slimbot
+
+Ahora inicializa el proyecto:
+
+npm init -y
+
+- Debe aparecer un mensaje con "package.json" creado
+
+================================================================
+PASO 5 - INSTALAR DEPENDENCIAS DEL BOT
+================================================================
+
+Instala las librerias que necesita el bot:
+
+npm install @whiskeysockets/baileys @hapi/boom
+
+- Este paso puede tardar 5-10 minutos. Ten paciencia.
+- Cuando termine debe decir: "added X packages"
+- Si aparece algun error de "warn", no te preocupes, es normal
+
+================================================================
+PASO 6 - PONER EL ARCHIVO DEL BOT
+================================================================
+
+Ahora necesitas poner el archivo "slimbot-final.js" en la carpeta.
+
+Tienes dos opciones:
+
+OPCION A - Desde el gestor de archivos:
+1. Abre tu gestor de archivos
+2. Ve a: Almacenamiento interno > Android > data > com.termux > files > home > slimbot
+3. Copia el archivo "slimbot-final.js" ahi adentro
+
+OPCION B - Usando el comando de descarga:
+(Solo si tienes el link del archivo)
+
+curl -o slimbot-final.js [EL LINK QUE TE DIO EL ADMIN]
+
+================================================================
+PASO 7 - AGREGAR TU KEY AL ARCHIVO
+================================================================
+
+El archivo tiene una key de ejemplo. Necesitas cambiarla por la tuya.
+
+1. Abre el archivo keys.json que se creo automaticamente
+   (Se crea la primera vez que corres el bot)
+
+2. O edita el archivo directamente en Termux:
+
+nano keys.json
+
+3. Cambia "Lic-slim-EJEMPLO1" por tu key real
+   Ejemplo: "Lic-slim-AB12CD34"
+
+4. Para guardar en nano: presiona Ctrl+X, luego Y, luego ENTER
+
+================================================================
+PASO 8 - CORRER EL BOT
+================================================================
+
+Ahora si, corre el bot:
+
+node slimbot-final.js
+
+- Vas a ver un codigo QR en la pantalla (cuadrado de puntos)
+- Tambien puedes ver el QR en: /api/bot/qr si tienes el panel
+
+ESCANEAR EL QR:
+1. Abre WhatsApp en tu telefono
+2. Toca los 3 puntos arriba a la derecha
+3. Toca "Dispositivos vinculados"
+4. Toca "Vincular dispositivo"
+5. Escanea el codigo QR que aparece en Termux
+6. Cuando diga "Conectado!" el bot esta funcionando
+
+================================================================
+PASO 9 - ACTIVAR TU KEY EN EL BOT
+================================================================
+
+Ahora escribe al bot en WhatsApp:
+
+.key Lic-slim-XXXXXXXX
+
+(Cambia Lic-slim-XXXXXXXX por tu key real)
+
+El bot debe responder: "Licencia activada!"
+
+Si responde "Key no encontrada", verifica que copiaste bien la key.
+
+================================================================
+PASO 10 - MANTENER EL BOT ACTIVO (MUY IMPORTANTE)
+================================================================
+
+Para que el bot no se apague cuando cierres Termux:
+
+1. Instala el paquete para correr en segundo plano:
+
+pkg install termux-services -y
+
+2. Luego instala screen:
+
+pkg install screen -y
+
+3. Usa screen para correr el bot:
+
+screen -S slimbot
+node slimbot-final.js
+
+4. Para salir de screen sin apagar el bot:
+   Presiona: Ctrl + A, luego D
+
+5. Para volver a ver el bot:
+
+screen -r slimbot
+
+6. Para ver si el bot sigue corriendo:
+
+screen -ls
+
+================================================================
+SI TIENES UN ERROR
+================================================================
+
+ERROR: "Cannot find module '@whiskeysockets/baileys'"
+SOLUCION: Vuelve a correr: npm install @whiskeysockets/baileys @hapi/boom
+
+ERROR: "QR timeout" o el QR desaparece sin conectarse
+SOLUCION: Vuelve a correr el bot con: node slimbot-final.js
+          El QR expira en 60 segundos, tienes que ser rapido
+
+ERROR: "Connection closed. Reconnecting"
+SOLUCION: Espera, el bot se reconecta solo automaticamente
+
+ERROR: "Error: ENOENT keys.json"
+SOLUCION: El archivo de keys se crea automaticamente la primera vez
+          Solo corre el bot y se crea solo
+
+ERROR: El bot responde "Key no encontrada"
+SOLUCION: Verifica que copiaste bien la key en keys.json
+          La key debe ser exactamente igual a la que tienes
+
+ERROR: "npm not found" o "node not found"
+SOLUCION: Vuelve al paso 3 y reinstala nodejs:
+          pkg install nodejs -y
+
+================================================================
+SI EL BOT SE APAGA SOLO
+================================================================
+
+1. Abre Termux
+2. Escribe: screen -r slimbot
+3. Si no funciona, escribe: cd slimbot && node slimbot-final.js
+
+Para evitar que el telefono mate Termux:
+- Ve a Ajustes > Bateria > SlimBot / Termux
+- Desactiva "Optimizacion de bateria"
+- Pon "Sin restricciones" en uso en segundo plano
+
+================================================================
+CONTACTO SI NECESITAS AYUDA
+================================================================
+
+Si tienes algun problema que no puedes resolver:
+Escribe al admin: +52 612 169 79 59
+
+Incluye:
+- Cual es el error exacto (una foto ayuda)
+- En que paso estas
+- Que sistema tiene tu telefono
+
+================================================================
+  FIN DEL TUTORIAL
+================================================================
